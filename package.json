@@ -19,6 +19,10 @@
     "grunt-node-webkit-builder": "~1.0.2",
     "grunt-contrib-compress": "~0.13.0",
     "grunt-shell": "~1.1.2",
-    "grunt-contrib-clean": "~0.6.0"
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-sass": "~1.0.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-connect": "~0.10.1",
+    "grunt-babel": "~5.0.1"
   }
 }

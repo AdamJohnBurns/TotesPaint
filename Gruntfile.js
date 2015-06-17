@@ -1,10 +1,24 @@
 module.exports = function (grunt) {
     'use strict';
     
-    var packagedFiles = ['index.html', 'package.json', 'img/*', 'css/*', 'js/*'];
+    var SERVER_PORT = 9001,
+        LIVERELOAD_PORT = 9002,
+        
+        packagedFiles = ['index.html', 'package.json', 'img/*', 'dist/css/*', 'dist/js/*'];
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        
+        babel: {
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'dist/js/scripts.js': 'js/**/*.js'
+                }
+            }
+        },
         
         clean: ['builds/TotesPaint/*'],
         
@@ -18,6 +32,17 @@ module.exports = function (grunt) {
             }
         },
         
+        connect: {
+            server: {
+                options: {
+                    port: SERVER_PORT,
+                    base: './',
+                    livereload: LIVERELOAD_PORT,
+                    open: true
+                }
+            }
+        },
+        
         nodewebkit: {
             options: {
                 platforms: ['win64'],
@@ -25,6 +50,17 @@ module.exports = function (grunt) {
                 winIco: 'img/facebook.ico',
             },
             src: packagedFiles
+        },
+        
+        sass: {
+            options: {
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    'dist/css/styles.css': 'scss/main.scss'
+                }
+            }
         },
         
         shell: {
@@ -37,16 +73,40 @@ module.exports = function (grunt) {
             runBuild: {
                 command: '"builds/TotesPaint/win64/TotesPaint.exe"'
             }
+        },
+        
+        watch: {
+            js: {
+                files: 'js/**/*.js',
+                tasks: ['babel'],
+                options: {
+                    interrupt: true,
+                    livereload: LIVERELOAD_PORT
+                },
+            },
+            scss: {
+                files: 'scss/**/*.scss',
+                tasks: ['sass'],
+                options: {
+                    interrupt: true,
+                    livereload: LIVERELOAD_PORT
+                },
+            }
         }
     });
 
+    grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
+    grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-shell');
 
-    grunt.registerTask('build', ['clean', 'nodewebkit', 'shell:runBuild']);
-    grunt.registerTask('test', ['compress', 'shell:runTest']);
+    grunt.registerTask('buildAssets', ['sass', 'babel']);
+    grunt.registerTask('buildApp', ['buildAssets', 'clean', 'nodewebkit', 'shell:runBuild']);
+    grunt.registerTask('testApp', ['buildAssets', 'compress', 'shell:runTest']);
     
-    grunt.registerTask('default', ['test']);
+    grunt.registerTask('default', ['buildAssets', 'connect', 'watch']);
 };
