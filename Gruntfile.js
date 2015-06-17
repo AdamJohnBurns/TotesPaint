@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'dist/js/scripts.js': 'js/**/*.js'
+                    'dist/js/scripts.js': 'dist/js/scripts.js'
                 }
             }
         },
@@ -42,12 +42,22 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['js/**/*.js'],
+                dest: 'dist/js/scripts.js'
+            },
+        },
         
         nodewebkit: {
             options: {
                 platforms: ['win64'],
                 buildDir: './builds',
-                winIco: 'img/facebook.ico',
+                winIco: 'img/facebook.ico'
             },
             src: packagedFiles
         },
@@ -78,11 +88,11 @@ module.exports = function (grunt) {
         watch: {
             js: {
                 files: 'js/**/*.js',
-                tasks: ['babel'],
+                tasks: ['concat', 'babel'],
                 options: {
                     interrupt: true,
                     livereload: LIVERELOAD_PORT
-                },
+                }
             },
             scss: {
                 files: 'scss/**/*.scss',
@@ -90,7 +100,7 @@ module.exports = function (grunt) {
                 options: {
                     interrupt: true,
                     livereload: LIVERELOAD_PORT
-                },
+                }
             }
         }
     });
@@ -98,13 +108,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-shell');
 
-    grunt.registerTask('buildAssets', ['sass', 'babel']);
+    grunt.registerTask('buildAssets', ['sass', 'concat', 'babel']);
     grunt.registerTask('buildApp', ['buildAssets', 'clean', 'nodewebkit', 'shell:runBuild']);
     grunt.registerTask('testApp', ['buildAssets', 'compress', 'shell:runTest']);
     
