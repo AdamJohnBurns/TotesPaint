@@ -1,0 +1,21 @@
+.button {
+	width:43px;
+    height:43px;
+    border:1px solid #ccc;
+    float:left;
+    margin:5px 10px 5px 0;
+    background-color:transparent;
+    transition:background-color 0.3s ease;
+    font-size: 10px;
+    text-align: center;
+    font-family: Arial;
+    cursor:pointer;
+
+    &:hover {
+        background-color:#fff;
+    }
+
+    &.active {
+        background-color:#bbb;
+    }
+}
