@@ -8,25 +8,34 @@
 			<ul class="group">
 				<li class="button" id="new-button">new</li>
 				<li class="button" id="save-button">save</li>
-				<li class="button" id="save-as-button">save as</li>
-				<li class="button" id="open-button">open</li>
+				<!--<li class="button" id="save-as-button">save as</li>-->
+				<!--<li class="button" id="open-button">open</li>-->
 			</ul>
 			<ul class="group">
-				<li class="button" id="undo-button">undo</li>
-				<li class="button" id="redo-button">redo</li>
+				<!--<li class="button" id="undo-button">undo</li>-->
+				<!--<li class="button" id="redo-button">redo</li>-->
 			</ul>
 			<ul class="group toggles">
 				<li class="button active" id="pixel-button">pixel</li>
-                <li class="button" id="flood-fill-button">flood fill</li>
-				<li class="button" id="rectangle-button">rectangle</li>
-				<li class="button" id="circle-button">circle</li>
+                <!--<li class="button" id="flood-fill-button">flood fill</li>-->
+				<!--<li class="button" id="rectangle-button">rectangle</li>-->
+				<!--<li class="button" id="circle-button">circle</li>-->
 			</ul>
 			<ul class="group">
 				<li class="button" id="stroke-color-button">stroke color</li>
-				<li class="button" id="fill-color-button">fill color</li>
-				<li class="button" id="stroke-button">stroke</li>
+				<!--<li class="button" id="fill-color-button">fill color</li>-->
+				<!--<li class="button" id="stroke-button">stroke</li>-->
 			</ul>
 		</div>
+
+        <div class="color-picker">
+            <div class="color-result"></div>
+            <ul class="color-channels">
+                <li class="color-channel red"><div class="channel-marker" style="top:0;"></div></li>
+                <li class="color-channel green"><div class="channel-marker" style="top:0;"></div></li>
+                <li class="color-channel blue"><div class="channel-marker" style="top:0;"></div></li>
+            </ul>
+        </div>
 		
 		<canvas id="drawing" width="200" height="200"></canvas>
 		
